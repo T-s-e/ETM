@@ -1,0 +1,33 @@
+steps:
+  # I: set python environment
+  - name: 'python:3.6'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        python -m venv venv &&
+        source venv/bin/activate &&
+        pip install --upgrade pip &&
+        pip install -r requirement.txt
+
+  # II: run 
+  - name: 'python:3.6'
+    entrypoint: 'python'
+    args:
+      - main.py
+      - --mode
+      - train
+      - --dataset
+      - 20ng
+      - --data_path
+      - data/20ng
+      - --num_topics
+      - "50"
+      - --train_embeddings
+      - "1"
+      - --epochs
+      - "1000"
+
+# elective
+images:
+  - 'gcr.io/$PROJECT_ID/etm'
